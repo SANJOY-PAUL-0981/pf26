@@ -4,35 +4,16 @@ import { useEffect, useRef } from "react"
 import rough from "roughjs"
 import { cn } from "@/lib/utils"
 
-type PaperVariant =
-  | "cream"
-  | "white"
-  | "yellow"
-  | "pink"
-  | "blue"
-  | "green"
-  | "gray"
+type PaperVariant = "cream" | "white" | "yellow" | "pink" | "blue" | "green" | "gray"
 
-type PaperEdgeStyle =
-  | "normal"
-  | "folded-corner"
-  | "curled-bottom"
-  | "torn"
-  | "messy"
+type PaperEdgeStyle = "normal" | "folded-corner" | "curled-bottom" | "torn" | "messy"
 
 type RoughPaperOptions = {
   seed?: number
   stroke?: string
   strokeWidth?: number
   fill?: string
-  fillStyle?:
-    | "solid"
-    | "hachure"
-    | "zigzag"
-    | "cross-hatch"
-    | "dots"
-    | "dashed"
-    | "zigzag-line"
+  fillStyle?: "solid" | "hachure" | "zigzag" | "cross-hatch" | "dots" | "dashed" | "zigzag-line"
   hachureGap?: number
   hachureAngle?: number
   roughness?: number
@@ -67,7 +48,7 @@ type PaperProps = {
 }
 
 const colors: Record<PaperVariant, string> = {
-  cream: "#fff7df",
+  cream: "#fffbf2",
   white: "#ffffff",
   yellow: "#fef3c7",
   pink: "#fce7f3",
@@ -180,27 +161,20 @@ function messyPaperPath(
 
 export function Paper({
   children,
-
   width = "100%",
   minHeight = 160,
-
   x = 8,
   y = 8,
-
   variant = "cream",
   edgeStyle = "normal",
-
   borderColor = "#111",
   transparent = false,
   roughOptions,
-
   rotate = 0,
   padding = 24,
-
   foldSize = 28,
   curlSize = 18,
   tornAmount = 8,
-
   className,
   contentClassName,
 }: PaperProps) {
@@ -278,6 +252,7 @@ export function Paper({
     >
       <svg
         ref={svgRef}
+        style={{ overflow: "visible" }}
         className="pointer-events-none absolute inset-0 h-full w-full"
         aria-hidden="true"
       />

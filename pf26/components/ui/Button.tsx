@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import rough from "roughjs"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
@@ -9,10 +9,19 @@ type RoughButtonOptions = {
   seed?: number
   stroke?: string
   strokeWidth?: number
-  fillStyle?: "solid" | "hachure" | "zigzag" | "cross-hatch" | "dots" | "dashed" | "zigzag-line"
+  fillStyle?:
+    | "solid"
+    | "hachure"
+    | "zigzag"
+    | "cross-hatch"
+    | "dots"
+    | "dashed"
+    | "zigzag-line"
   hachureGap?: number
+  hoverHachureGap?: number
   hachureAngle?: number
   roughness?: number
+  hoverRoughness?: number
   bowing?: number
 }
 
@@ -35,6 +44,8 @@ type ButtonProps = {
   fontSize?: number
   paddingX?: number
   fontWeight?: "normal" | "medium" | "semibold" | "bold"
+
+  hoverSketch?: boolean
 }
 
 const colors: Record<ButtonVariant, string> = {
@@ -73,8 +84,11 @@ export function Button({
   fontSize = 18,
   paddingX = 18,
   fontWeight = "bold",
+
+  hoverSketch = true,
 }: ButtonProps) {
   const svgRef = useRef<SVGSVGElement | null>(null)
+  const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {
     const svg = svgRef.current
@@ -84,29 +98,39 @@ export function Button({
 
     const rc = rough.svg(svg)
 
+    const normalHachureGap = roughOptions?.hachureGap ?? 5
+    const hoverHachureGap = roughOptions?.hoverHachureGap ?? 0.75
+
+    const normalRoughness = roughOptions?.roughness ?? 1.4
+    const hoverRoughness = roughOptions?.hoverRoughness ?? 1.9
+
     const shape = rc.rectangle(x, y, width, height, {
       seed: roughOptions?.seed ?? seedMap[variant],
       stroke: roughOptions?.stroke ?? "#111",
       strokeWidth: roughOptions?.strokeWidth ?? 1.7,
       fill: colors[variant],
       fillStyle: roughOptions?.fillStyle ?? "hachure",
-      hachureGap: roughOptions?.hachureGap ?? 5,
+      hachureGap:
+        hoverSketch && isHovered ? hoverHachureGap : normalHachureGap,
       hachureAngle: roughOptions?.hachureAngle ?? -10,
-      roughness: roughOptions?.roughness ?? 1.4,
+      roughness:
+        hoverSketch && isHovered ? hoverRoughness : normalRoughness,
       bowing: roughOptions?.bowing ?? 0.8,
     })
 
     svg.appendChild(shape)
-  }, [variant, width, height, x, y, roughOptions])
+  }, [variant, width, height, x, y, roughOptions, isHovered, hoverSketch])
 
   const totalWidth = width + x * 2
   const totalHeight = height + y * 2
 
   const inner = (
     <span
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       className={cn(
         "relative inline-flex items-center justify-center",
-        "text-black transition-transform duration-150",
+        "text-black transition-transform duration-150 ease-out",
         "hover:-rotate-1 hover:-translate-y-1",
         className
       )}
@@ -118,7 +142,7 @@ export function Button({
       <svg
         ref={svgRef}
         viewBox={`0 0 ${totalWidth} ${totalHeight}`}
-        className="absolute inset-0 h-full w-full"
+        className="absolute inset-0 h-full w-full transition-opacity duration-150"
         aria-hidden="true"
       />
 

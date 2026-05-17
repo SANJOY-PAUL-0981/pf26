@@ -22,27 +22,20 @@ type RoughBorderOptions = {
 
 type SketchBorderProps = {
     children?: React.ReactNode
-
     width?: number | string
     height?: number | string
     minHeight?: number | string
-
     x?: number
     y?: number
-
     shape?: SketchBorderShape
     borderStyle?: SketchBorderStyle
     radius?: number
-
     borderColor?: string
     fillColor?: string
     transparent?: boolean
-
     padding?: number
     rotate?: number
-
     roughOptions?: RoughBorderOptions
-
     className?: string
     contentClassName?: string
 }
@@ -72,27 +65,20 @@ function roundedRectPath(
 
 export function SketchBorder({
     children,
-
     width = "100%",
     height,
     minHeight = 120,
-
     x = 6,
     y = 6,
-
     shape = "rectangle",
     borderStyle = "solid",
     radius = 16,
-
     borderColor = "#111",
     fillColor = "transparent",
     transparent = true,
-
     padding = 16,
     rotate = 0,
-
     roughOptions,
-
     className,
     contentClassName,
 }: SketchBorderProps) {
@@ -124,7 +110,7 @@ export function SketchBorder({
             hachureAngle: roughOptions?.hachureAngle ?? -10,
             roughness: roughOptions?.roughness ?? 1.6,
             bowing: roughOptions?.bowing ?? 0.9,
-            strokeLineDash: borderStyle === "dashed" ? [8, 6] : undefined,
+            strokeLineDash: borderStyle === "dashed" ? [8, 8] : undefined,
         }
 
         let node: SVGGElement
@@ -177,6 +163,7 @@ export function SketchBorder({
             <svg
                 ref={svgRef}
                 className="pointer-events-none absolute inset-0 h-full w-full"
+                style={{ overflow: "visible" }}
                 aria-hidden="true"
             />
 

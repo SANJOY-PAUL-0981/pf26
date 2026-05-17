@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { Button } from "@/components/ui/Button"
 import { Tape } from "@/components/ui/Tape"
 import Image from "next/image"
 import github from "../../public/icons/github.png"
@@ -17,21 +16,21 @@ const navItems = [
 
 export function Navbar() {
     return (
-        <header className="sticky top-0 z-50 px-6 py-5">
-            <nav className="mx-auto flex max-w-6xl items-center justify-between">
+        <header className="sticky top-0 z-50 px-44 py-5">
+            <nav className="mx-auto flex items-center justify-between">
                 <Link href="/" className="relative text-2xl font-black text-black">
                     <Tape
-                        variant="yellow"
+                        variant="purple"
                         tapeStyle="side-torn"
-                        width={96}
-                        height={28}
+                        width={160}
+                        height={33}
                         rotate={-4}
                         className="absolute -left-3 top-1 -z-10"
                     />
-                    Sanjoy
+                    Sanjoy.dev
                 </Link>
 
-                <div className="hidden items-center gap-8 md:flex">
+                <div className="hidden items-center gap-8 md:flex pl-16">
                     {navItems.map((item) => (
                         <Link
                             key={item.href}
@@ -65,7 +64,7 @@ export function Navbar() {
                     </Link>
 
                     <Link
-                        href="https://www.linkedin.com/in/sanjoy-paul-b0053122a/"
+                        href="https://x.com/Sanj0yX"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="LinkedIn"
@@ -83,7 +82,7 @@ export function Navbar() {
                     </Link>
 
                     <Link
-                        href="https://drive.google.com/file/d/1tPP8MuitQjDkfBx7NPQVWNU7NbGNnNPB/view?usp=sharing"
+                        href="https://drive.google.com/file/d/1h9bpb-RyMJwvI96Pqz75Tz5lRBEGX_wU/view?usp=sharing"
                         target="_blank"
                         aria-label="Resume"
                         className="transition-transform hover:-translate-y-1"

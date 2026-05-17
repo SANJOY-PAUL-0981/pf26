@@ -32,6 +32,7 @@ type BadgeProps = {
     shape?: BadgeShape
     variant?: BadgeVariant
     borderColor?: string
+    fillColor?: string
     transparent?: boolean
     roughOptions?: RoughBadgeOptions
     radius?: number
@@ -63,7 +64,7 @@ function roundedRectPath(
 }
 
 const colors: Record<BadgeVariant, string> = {
-    yellow: "#fde047",
+    yellow: "#F2F272",
     purple: "#d8c7ff",
     green: "#bbf7d0",
     pink: "#fbcfe8",
@@ -100,6 +101,7 @@ export function Badge({
     shape = "rectangle",
     variant = "yellow",
     borderColor = "#111",
+    fillColor,
     transparent = false,
     roughOptions,
     radius = 12,
@@ -120,7 +122,7 @@ export function Badge({
             seed: roughOptions?.seed ?? seedMap[variant],
             stroke: roughOptions?.stroke ?? borderColor,
             strokeWidth: roughOptions?.strokeWidth ?? 1.4,
-            fill: transparent ? undefined : roughOptions?.fill ?? colors[variant],
+            fill: transparent ? undefined : roughOptions?.fill ?? fillColor ?? colors[variant],
             fillStyle: transparent ? undefined : roughOptions?.fillStyle ?? "hachure",
             hachureGap: roughOptions?.hachureGap ?? 5,
             hachureAngle: roughOptions?.hachureAngle ?? -10,
@@ -165,6 +167,7 @@ export function Badge({
         shape,
         variant,
         borderColor,
+        fillColor,
         transparent,
         roughOptions,
         radius,
@@ -187,7 +190,7 @@ export function Badge({
 
             <span
                 className={cn(
-                    "relative z-10 px-3 text-sm font-semibold text-black",
+                    "relative z-10 px-3 text-sm font-semibold text-black flex h-full w-full items-center justify-center",
                     textClassName
                 )}
                 style={{
