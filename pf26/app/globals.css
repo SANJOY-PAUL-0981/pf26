@@ -3,3 +3,7 @@
 body {
   font-family: "Comic Sans MS", "Comic Neue", cursive;
 }
+
+html {
+  scroll-behavior: smooth;
+}

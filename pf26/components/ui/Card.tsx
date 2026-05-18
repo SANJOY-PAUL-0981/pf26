@@ -154,7 +154,9 @@ export function Card({
             shapeNode = rc.rectangle(x, y, drawWidth, drawHeight, {
                 ...commonOptions,
                 fill: transparent ? undefined : roughOptions?.fill ?? colors[variant],
-                fillStyle: transparent ? undefined : "solid",
+                fillStyle: transparent
+                    ? undefined
+                    : roughOptions?.fillStyle ?? "hachure",
                 strokeLineDash: [8, 6],
             })
         } else if (borderStyle === "project-corner") {

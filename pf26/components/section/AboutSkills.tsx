@@ -1,10 +1,4 @@
 import Image from "next/image"
-import {
-    Heart,
-    SportShoe,
-    Lightbulb,
-    Rocket
-} from "lucide-react"
 
 import { SectionTitle } from "@/components/ui/SectionTitle"
 import { Badge } from "@/components/ui/Badge"

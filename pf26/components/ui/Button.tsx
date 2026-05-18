@@ -9,14 +9,7 @@ type RoughButtonOptions = {
   seed?: number
   stroke?: string
   strokeWidth?: number
-  fillStyle?:
-    | "solid"
-    | "hachure"
-    | "zigzag"
-    | "cross-hatch"
-    | "dots"
-    | "dashed"
-    | "zigzag-line"
+  fillStyle?: "solid" | "hachure" | "zigzag" | "cross-hatch" | "dots" | "dashed" | "zigzag-line"
   hachureGap?: number
   hoverHachureGap?: number
   hachureAngle?: number
@@ -46,6 +39,16 @@ type ButtonProps = {
   fontWeight?: "normal" | "medium" | "semibold" | "bold"
 
   hoverSketch?: boolean
+
+  enable3D?: boolean
+  depth?: number
+  depthAngle?: number
+  depthFill?: string
+
+  depthHachureGap?: number
+  depthHachureAngle?: number
+  depthRoughness?: number
+  depthStrokeWidth?: number
 }
 
 const colors: Record<ButtonVariant, string> = {
@@ -67,6 +70,14 @@ const fontWeightMap = {
   bold: 700,
 }
 
+function polygonPath(points: [number, number][]) {
+  return (
+    points
+      .map(([px, py], index) => `${index === 0 ? "M" : "L"} ${px} ${py}`)
+      .join(" ") + " Z"
+  )
+}
+
 export function Button({
   children,
   href,
@@ -86,6 +97,16 @@ export function Button({
   fontWeight = "bold",
 
   hoverSketch = true,
+
+  enable3D = false,
+  depth = 12,
+  depthAngle = 35,
+  depthFill = "#fffbf2",
+
+  depthHachureGap = 5,
+  depthHachureAngle = 85,
+  depthRoughness,
+  depthStrokeWidth,
 }: ButtonProps) {
   const svgRef = useRef<SVGSVGElement | null>(null)
   const [isHovered, setIsHovered] = useState(false)
@@ -104,25 +125,138 @@ export function Button({
     const normalRoughness = roughOptions?.roughness ?? 1.4
     const hoverRoughness = roughOptions?.hoverRoughness ?? 1.9
 
-    const shape = rc.rectangle(x, y, width, height, {
-      seed: roughOptions?.seed ?? seedMap[variant],
-      stroke: roughOptions?.stroke ?? "#111",
-      strokeWidth: roughOptions?.strokeWidth ?? 1.7,
-      fill: colors[variant],
-      fillStyle: roughOptions?.fillStyle ?? "hachure",
-      hachureGap:
-        hoverSketch && isHovered ? hoverHachureGap : normalHachureGap,
-      hachureAngle: roughOptions?.hachureAngle ?? -10,
-      roughness:
-        hoverSketch && isHovered ? hoverRoughness : normalRoughness,
-      bowing: roughOptions?.bowing ?? 0.8,
-    })
+    const stroke = roughOptions?.stroke ?? "#111"
+    const strokeWidth = roughOptions?.strokeWidth ?? 1.7
 
-    svg.appendChild(shape)
-  }, [variant, width, height, x, y, roughOptions, isHovered, hoverSketch])
+    const roughness =
+      hoverSketch && isHovered ? hoverRoughness : normalRoughness
 
-  const totalWidth = width + x * 2
-  const totalHeight = height + y * 2
+    const hachureGap =
+      hoverSketch && isHovered
+        ? hoverHachureGap
+        : normalHachureGap
+
+    const angleRad = (depthAngle * Math.PI) / 180
+
+    const dx = enable3D
+      ? Math.cos(angleRad) * depth
+      : 0
+
+    const dy = enable3D
+      ? Math.sin(angleRad) * depth
+      : 0
+
+    const frontX = x
+    const frontY = y
+
+    const frontRight = frontX + width
+    const frontBottom = frontY + height
+
+    if (enable3D) {
+      const rightFace = polygonPath([
+        [frontRight, frontY],
+        [frontRight + dx, frontY + dy],
+        [frontRight + dx, frontBottom + dy],
+        [frontRight, frontBottom],
+      ])
+
+      const bottomFace = polygonPath([
+        [frontX, frontBottom],
+        [frontRight, frontBottom],
+        [frontRight + dx, frontBottom + dy],
+        [frontX + dx, frontBottom + dy],
+      ])
+
+      const depthBaseSeed =
+        roughOptions?.seed ?? seedMap[variant]
+
+      const sideOptions = {
+        seed: depthBaseSeed + 10,
+        stroke,
+        strokeWidth: depthStrokeWidth ?? strokeWidth,
+        fill: depthFill,
+        fillStyle: "hachure" as const,
+        hachureGap: depthHachureGap,
+        hachureAngle: depthHachureAngle,
+        roughness: depthRoughness ?? roughness + 0.35,
+        bowing: roughOptions?.bowing ?? 0.8,
+      }
+
+      const bottomOptions = {
+        seed: depthBaseSeed + 20,
+        stroke,
+        strokeWidth: depthStrokeWidth ?? strokeWidth,
+        fill: depthFill,
+        fillStyle: "hachure" as const,
+        hachureGap: depthHachureGap,
+        hachureAngle: -35,
+        roughness: depthRoughness ?? roughness + 0.35,
+        bowing: roughOptions?.bowing ?? 0.8,
+      }
+
+      const rightShape = rc.path(rightFace, sideOptions)
+      const bottomShape = rc.path(bottomFace, bottomOptions)
+
+      svg.appendChild(rightShape)
+      svg.appendChild(bottomShape)
+    }
+
+    const frontShape = rc.rectangle(
+      frontX,
+      frontY,
+      width,
+      height,
+      {
+        seed: roughOptions?.seed ?? seedMap[variant],
+        stroke,
+        strokeWidth,
+        fill: colors[variant],
+        fillStyle: roughOptions?.fillStyle ?? "hachure",
+        hachureGap,
+        hachureAngle:
+          roughOptions?.hachureAngle ?? -10,
+        roughness,
+        bowing: roughOptions?.bowing ?? 0.8,
+      }
+    )
+
+    svg.appendChild(frontShape)
+  }, [
+    variant,
+    width,
+    height,
+    x,
+    y,
+    roughOptions,
+    isHovered,
+    hoverSketch,
+
+    enable3D,
+    depth,
+    depthAngle,
+    depthFill,
+
+    depthHachureGap,
+    depthHachureAngle,
+    depthRoughness,
+    depthStrokeWidth,
+  ])
+
+  const angleRad = (depthAngle * Math.PI) / 180
+
+  const depthX = enable3D
+    ? Math.cos(angleRad) * depth
+    : 0
+
+  const depthY = enable3D
+    ? Math.sin(angleRad) * depth
+    : 0
+
+  const totalWidth =
+    width + x * 2 + Math.abs(depthX) + 4
+
+  const totalHeight =
+    height + y * 2 + Math.abs(depthY) + 4
 
   const inner = (
     <span
@@ -131,7 +265,7 @@ export function Button({
       className={cn(
         "relative inline-flex items-center justify-center",
         "text-black transition-transform duration-150 ease-out",
-        "hover:-rotate-1 hover:-translate-y-1",
+        "hover:-translate-y-1 hover:-rotate-1",
         className
       )}
       style={{
@@ -142,13 +276,18 @@ export function Button({
       <svg
         ref={svgRef}
         viewBox={`0 0 ${totalWidth} ${totalHeight}`}
-        className="absolute inset-0 h-full w-full transition-opacity duration-150"
+        className="absolute inset-0 h-full w-full"
         aria-hidden="true"
       />
 
       <span
-        className={cn("relative z-10", textClassName)}
+        className={cn(
+          "relative z-10 flex items-center justify-center",
+          textClassName
+        )}
         style={{
+          width,
+          height,
           fontSize,
           paddingLeft: paddingX,
           paddingRight: paddingX,
@@ -165,7 +304,12 @@ export function Button({
       <Link
         href={href}
         target={external ? "_blank" : undefined}
-        rel={external ? "noopener noreferrer" : undefined}
+        rel={
+          external
+            ? "noopener noreferrer"
+            : undefined
+        }
+        className="inline-block"
       >
         {inner}
       </Link>
@@ -173,7 +317,11 @@ export function Button({
   }
 
   return (
-    <button type="button" onClick={onClick} className="inline-block">
+    <button
+      type="button"
+      onClick={onClick}
+      className="inline-block"
+    >
       {inner}
     </button>
   )

@@ -1,14 +1,69 @@
+"use client"
+
 import Image from "next/image"
+import { useEffect, useState } from "react"
 import { FileText, Terminal } from "lucide-react"
+
 import { Button } from "@/components/ui/Button"
 import { Paper } from "@/components/ui/Paper"
 import { SketchBorder } from "@/components/ui/SketchBorder"
 import { Tape } from "@/components/ui/Tape"
+import { ComicToast } from "@/components/ui/ComicToast"
+
 import pfLego from "@/public/images/lego-pf.png"
 
 export function Hero() {
+    const [showToast, setShowToast] = useState(false)
+
+    async function handleCopyCommand() {
+        const command = "npx sanjoyxyz"
+
+        try {
+            await navigator.clipboard.writeText(command)
+            setShowToast(true)
+        } catch {
+            setShowToast(true)
+        }
+    }
+
+    useEffect(() => {
+        if (!showToast) return
+
+        const timer = setTimeout(() => {
+            setShowToast(false)
+        }, 5000)
+
+        return () => clearTimeout(timer)
+    }, [showToast])
+
     return (
-        <section className="mx-auto grid min-h-[calc(100vh-96px)] max-w-6xl grid-cols-1 items-center gap-12 py-10 md:grid-cols-[1.1fr_0.9fr]">
+        <section
+            id="home"
+            className="relative mx-auto grid min-h-[calc(100vh-96px)] max-w-6xl grid-cols-1 items-center gap-12 py-10 md:grid-cols-[1.1fr_0.9fr]"
+        >
+            {showToast && (
+                <div className="fixed bottom-8 right-8 z-[999] w-[400px]">
+                    <ComicToast
+                        variant="bubble"
+                        pointer="bottom-right"
+                        color="paper"
+                        width="100%"
+                        minHeight={160}
+                        padding={40}
+                        rotate={-1}
+                        dottedShadow={false}
+                        contentClassName="flex min-h-[120px] flex-col items-center justify-center text-center"
+                    >
+                        <p className="text-base font-black leading-snug">
+                            Copied to your clipboard!
+                        </p>
+                        <p className="mt-1 text-sm font-semibold leading-relaxed text-black/70">
+                            Paste it in your terminal to see more.
+                        </p>
+                    </ComicToast>
+                </div>
+            )}
+
             <div>
                 <p className="mb-4 text-4xl font-black md:text-5xl">
                     Hello World! 👋
@@ -25,13 +80,13 @@ export function Hero() {
                         minHeight={130}
                         padding={24}
                         rotate={-1}
-
                         borderColor="#111"
                     >
                         <p className="text-xl font-semibold leading-relaxed">
                             Nice to meet you all, I am a passionate -
                             <br />
-                            CS Undergrad and a full stack eveloper who likes to build good looking and scalable web applications for the{" "}
+                            CS Undergrad and a full stack developer who likes to build good
+                            looking and scalable web applications for the{" "}
                             <span className="bg-green-200 px-2">real problems.</span>
                         </p>
                     </Paper>
@@ -48,7 +103,7 @@ export function Hero() {
                         roughOptions={{
                             seed: 67,
                             hoverHachureGap: 0.5,
-                            hoverRoughness: 0.5
+                            hoverRoughness: 0.5,
                         }}
                     >
                         <span className="inline-flex items-center gap-2">
@@ -62,9 +117,10 @@ export function Hero() {
                         width={210}
                         height={52}
                         fontSize={18}
+                        onClick={handleCopyCommand}
                         roughOptions={{
                             hoverHachureGap: 0.5,
-                            hoverRoughness: 0.5
+                            hoverRoughness: 0.5,
                         }}
                     >
                         <span className="inline-flex items-center gap-2">
