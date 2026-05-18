@@ -1,17 +1,151 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import { Send } from "lucide-react"
+
 import { SketchBorder } from "@/components/ui/SketchBorder"
 import { Tape } from "@/components/ui/Tape"
 import { Button } from "@/components/ui/Button"
 import { SectionTitle } from "@/components/ui/SectionTitle"
+import { ComicToast } from "@/components/ui/ComicToast"
+
 import paperPlane from "@/public/doodles/paper-plane.png"
 import smileyFace from "@/public/doodles/smile.png"
 
+type ToastState = {
+    type: "success" | "error"
+    title: string
+    message: string
+} | null
+
 export function Contact() {
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [message, setMessage] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [toast, setToast] = useState<ToastState>(null)
+
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault()
+
+        if (loading) return
+
+        const trimmedName = name.trim()
+        const trimmedEmail = email.trim()
+        const trimmedMessage = message.trim()
+
+        if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+            setToast({
+                type: "error",
+                title: "Missing details!",
+                message: "Please fill name, email, and message.",
+            })
+            return
+        }
+
+        if (trimmedMessage.length < 10) {
+            setToast({
+                type: "error",
+                title: "Message too short!",
+                message: "Please write at least 10 characters.",
+            })
+            return
+        }
+
+        setLoading(true)
+
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: trimmedName,
+                    email: trimmedEmail,
+                    message: trimmedMessage,
+                }),
+            })
+
+            const data = await response.json()
+
+            if (!response.ok) {
+                throw new Error(data.error || "Failed to send message.")
+            }
+
+            setToast({
+                type: "success",
+                title: "Message sent!",
+                message: "Thanks for reaching out. I will reply soon.",
+            })
+
+            setName("")
+            setEmail("")
+            setMessage("")
+        } catch (error) {
+            setToast({
+                type: "error",
+                title: "Message failed!",
+                message:
+                    error instanceof Error
+                        ? error.message
+                        : "Something went wrong. Try again later.",
+            })
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        if (!toast) return
+
+        const timer = window.setTimeout(() => {
+            setToast(null)
+        }, 5000)
+
+        return () => window.clearTimeout(timer)
+    }, [toast])
+
     return (
-        <section id="contact" className="mx-auto max-w-6xl overflow-visible px-6 py-16">
+        <section
+            id="contact"
+            className="mx-auto max-w-6xl overflow-visible px-6 py-16"
+        >
+            {toast && (
+                <div className="fixed bottom-8 right-8 z-[999] w-[390px] max-w-[calc(100vw-2rem)]">
+                    <ComicToast
+                        variant="thought"
+                        pointer="bottom-right"
+                        color="paper"
+                        width="100%"
+                        minHeight={160}
+                        padding={40}
+                        rotate={-1}
+                        dottedShadow={false}
+                        contentClassName="flex min-h-[120px] flex-col items-center justify-center text-center"
+                    >
+                        <div className="pr-2">
+                            <p className="text-base font-black leading-snug text-black">
+                                {toast.title}
+                            </p>
+
+                            <p className="mt-1 text-sm font-semibold leading-relaxed text-black/70">
+                                {toast.message}
+                            </p>
+
+                            <button
+                                type="button"
+                                onClick={() => setToast(null)}
+                                className="mt-3 text-xs font-black text-black/60 underline decoration-wavy underline-offset-4 transition hover:text-black"
+                            >
+                                close
+                            </button>
+                        </div>
+                    </ComicToast>
+                </div>
+            )}
+
             <div className="relative inline-block">
                 <SectionTitle
                     variant="pink"
@@ -19,7 +153,7 @@ export function Contact() {
                     height={58}
                     rotate={-1}
                     roughOptions={{
-                        hachureGap: 0.75
+                        hachureGap: 0.75,
                     }}
                     titleClassName="text-3xl"
                 >
@@ -27,7 +161,7 @@ export function Contact() {
                 </SectionTitle>
             </div>
 
-            <div className="mt-10 flex justify-center overflow-visible relative">
+            <div className="relative mt-10 flex justify-center overflow-visible">
                 <Image
                     src={paperPlane}
                     alt="Paper plane doodle"
@@ -43,6 +177,7 @@ export function Contact() {
                     height={250}
                     className="pointer-events-none absolute -bottom-10 -right-10 z-30 rotate-[10deg] object-contain"
                 />
+
                 <div className="relative w-full max-w-3xl overflow-visible">
                     <Tape
                         variant="yellow"
@@ -80,25 +215,24 @@ export function Contact() {
                                 </h3>
 
                                 <p className="mt-2 text-sm font-semibold leading-relaxed text-black/60 md:text-base">
-                                    Have an idea, project, or opportunity? Drop a message and I&apos;ll
-                                    get back to you.
+                                    Have an idea, project, or opportunity? Drop a message and
+                                    I&apos;ll get back to you.
                                 </p>
                             </div>
 
-                            <form
-                                className="space-y-5"
-                                onSubmit={(e) => {
-                                    e.preventDefault()
-                                }}
-                            >
+                            <form className="space-y-5" onSubmit={handleSubmit}>
                                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                                     <div>
                                         <label className="mb-2 block text-sm font-black text-black">
                                             Name
                                         </label>
+
                                         <input
                                             type="text"
                                             name="name"
+                                            value={name}
+                                            onChange={(event) => setName(event.target.value)}
+                                            required
                                             placeholder="Your name"
                                             className="w-full rounded-xl border-2 border-black bg-white/70 px-4 py-3 text-sm font-semibold text-black outline-none transition-transform duration-150 placeholder:text-black/35 focus:-rotate-1 focus:bg-white"
                                         />
@@ -108,9 +242,13 @@ export function Contact() {
                                         <label className="mb-2 block text-sm font-black text-black">
                                             Email
                                         </label>
+
                                         <input
                                             type="email"
                                             name="email"
+                                            value={email}
+                                            onChange={(event) => setEmail(event.target.value)}
+                                            required
                                             placeholder="your@email.com"
                                             className="w-full rounded-xl border-2 border-black bg-white/70 px-4 py-3 text-sm font-semibold text-black outline-none transition-transform duration-150 placeholder:text-black/35 focus:rotate-1 focus:bg-white"
                                         />
@@ -121,9 +259,13 @@ export function Contact() {
                                     <label className="mb-2 block text-sm font-black text-black">
                                         Message
                                     </label>
+
                                     <textarea
                                         name="message"
                                         rows={6}
+                                        value={message}
+                                        onChange={(event) => setMessage(event.target.value)}
+                                        required
                                         placeholder="Write your message..."
                                         className="w-full resize-none rounded-xl border-2 border-black bg-white/70 px-4 py-3 text-sm font-semibold leading-relaxed text-black outline-none transition-transform duration-150 placeholder:text-black/35 focus:-rotate-1 focus:bg-white"
                                     />
@@ -131,10 +273,12 @@ export function Contact() {
 
                                 <div className="pt-2">
                                     <Button
+                                        type="submit"
+                                        disabled={loading}
                                         variant="green"
-                                        width={150}
-                                        height={44}
-                                        fontSize={25}
+                                        width={170}
+                                        height={48}
+                                        fontSize={22}
                                         paddingX={14}
                                         enable3D
                                         depth={12}
@@ -147,8 +291,8 @@ export function Contact() {
                                             fillStyle: "hachure",
                                         }}
                                     >
-                                        <div className="inline-flex items-center gap-2 mb-4">
-                                            Send
+                                        <div className="inline-flex items-center gap-2">
+                                            {loading ? "Sending..." : "Send"}
                                             <Send size={16} />
                                         </div>
                                     </Button>

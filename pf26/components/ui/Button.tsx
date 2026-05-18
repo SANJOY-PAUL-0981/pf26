@@ -49,6 +49,9 @@ type ButtonProps = {
   depthHachureAngle?: number
   depthRoughness?: number
   depthStrokeWidth?: number
+
+  type?: "button" | "submit" | "reset"
+  disabled?: boolean
 }
 
 const colors: Record<ButtonVariant, string> = {
@@ -107,6 +110,8 @@ export function Button({
   depthHachureAngle = 85,
   depthRoughness,
   depthStrokeWidth,
+  type = "button",
+  disabled = false,
 }: ButtonProps) {
   const svgRef = useRef<SVGSVGElement | null>(null)
   const [isHovered, setIsHovered] = useState(false)
@@ -240,6 +245,8 @@ export function Button({
     depthHachureAngle,
     depthRoughness,
     depthStrokeWidth,
+    type,
+    disabled
   ])
 
   const angleRad = (depthAngle * Math.PI) / 180
@@ -318,9 +325,10 @@ export function Button({
 
   return (
     <button
-      type="button"
+      type={type}
+      disabled={disabled}
       onClick={onClick}
-      className="inline-block"
+      className="inline-block disabled:cursor-not-allowed disabled:opacity-70"
     >
       {inner}
     </button>

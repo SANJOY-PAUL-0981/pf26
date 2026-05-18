@@ -10,6 +10,7 @@ import linkedin from "../../public/icons/linkedin.png"
 import x from "../../public/icons/x.png"
 import mail from "../../public/icons/mail.png"
 import resume from "../../public/icons/resume.png"
+import logo from "@/public/doodles/logo.png"
 
 type RoughLineStyle = "wavy" | "straight"
 
@@ -177,16 +178,16 @@ export function Navbar() {
             className="sticky top-0 z-50 px-44 py-5 bg-[#fffbf2]"
         >
             <nav className="mx-auto flex items-center justify-between">
-                <Link href="/" className="relative text-2xl font-black text-black">
-                    <Tape
-                        variant="purple"
-                        tapeStyle="side-torn"
-                        width={160}
-                        height={33}
-                        rotate={-4}
-                        className="absolute -left-3 top-1 -z-10"
+                <Link
+                    href="/"
+                    className="relative flex h-12 w-[180px] items-center overflow-visible pt-5"
+                >
+                    <Image
+                        src={logo}
+                        alt="logo sanjoydev"
+                        className="h-12 w-auto scale-[2.75] origin-left object-contain"
+                        priority
                     />
-                    Sanjoy.dev
                 </Link>
 
                 <div
