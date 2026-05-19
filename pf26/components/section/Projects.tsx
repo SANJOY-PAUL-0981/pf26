@@ -58,7 +58,9 @@ const projects = [
     },
 ] as const
 
-const tagVariantMap: Record<string, any> = {
+type BadgeVariant = "yellow" | "purple" | "green" | "pink" | "blue" | "orange" | "gray" | "sky" | "silver"
+
+const tagVariantMap: Record<string, BadgeVariant> = {
     React: "blue",
     "Next.js": "gray",
     C: "blue",

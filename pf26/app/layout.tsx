@@ -144,18 +144,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Sanjoy Paul",
-    jobTitle: "Full Stack Developer",
-    description:
-      "Hello! I am Sanjoy, a Computer Science undergraduate and full-stack developer and AI enthusiast building scalable, good-looking products.",
-    url: "https://sanjoydev.com",
-    image: "https://sanjoydev.com/og-img.png",
-  };
-
+  
   return (
     <html
       lang="en"
