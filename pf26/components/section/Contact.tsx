@@ -113,7 +113,7 @@ export function Contact() {
             className="mx-auto max-w-6xl overflow-visible px-6 py-16"
         >
             {toast && (
-                <div className="fixed bottom-8 right-8 z-[999] w-[390px] max-w-[calc(100vw-2rem)] max-md:left-70 max-md:bottom-5 max-md:w-[300px] max-md:-translate-x-1/2 max-sm:w-[280px]">
+                <div className="fixed bottom-8 right-8 font-family-gaegu z-[999] w-[390px] max-w-[calc(100vw-2rem)] max-md:left-70 max-md:bottom-5 max-md:w-[300px] max-md:-translate-x-1/2 max-sm:w-[280px]">
                     <ComicToast
                         variant="thought"
                         pointer="bottom-right"
@@ -126,11 +126,11 @@ export function Contact() {
                         contentClassName="flex min-h-[120px] flex-col items-center justify-center text-center max-md:min-h-[88px] max-md:p-5 max-sm:min-h-[78px] max-sm:p-4"
                     >
                         <div className="pr-2 max-md:pr-0">
-                            <p className="text-base font-black leading-snug text-black max-md:text-sm max-sm:text-[13px]">
+                            <p className="font-black leading-snug text-black text-2xl max-md:text-sm max-sm:text-[16px]">
                                 {toast.title}
                             </p>
 
-                            <p className="mt-1 text-sm font-semibold leading-relaxed text-black/70 max-md:text-xs max-sm:text-[11px]">
+                            <p className="mt-1 text-[16px] max-md:text-sm max-sm:text-[12px] font-semibold leading-relaxed text-black/70">
                                 {toast.message}
                             </p>
 
