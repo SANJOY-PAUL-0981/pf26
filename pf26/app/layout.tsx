@@ -2,6 +2,7 @@ import "./globals.css"
 import type { Metadata, Viewport } from "next"
 import { Nunito, Patrick_Hand, Gaegu, Geist_Mono, Lacquer, Indie_Flower } from "next/font/google"
 import { SmoothScroll } from "@/components/ui/SmoothScroll"
+import { Analytics } from "@vercel/analytics/next";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -144,14 +145,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  
+
   return (
     <html
       lang="en"
       className={`${nunito.variable} ${patrickHand.variable} ${gaegu.variable} ${geistMono.variable} ${lacquer.variable} ${indieFlower.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
-        <SmoothScroll>{children}</SmoothScroll>
+        <SmoothScroll>
+          {children}
+          <Analytics />
+        </SmoothScroll>
       </body>
     </html>
   )
