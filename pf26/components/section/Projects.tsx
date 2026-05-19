@@ -1,4 +1,4 @@
-import { ExternalLink, FolderGit2 } from "lucide-react"
+import { FolderGit2 } from "lucide-react"
 import Link from "next/link"
 import { SectionTitle } from "@/components/ui/SectionTitle"
 import { Card } from "@/components/ui/Card"

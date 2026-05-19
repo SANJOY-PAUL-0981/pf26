@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Navbar } from "@/components/section/navbar";
 import { Hero } from "@/components/section/Hero";
 import { AboutSkills } from "@/components/section/AboutSkills";
@@ -7,7 +6,6 @@ import { GithubContributions } from "@/components/section/GithubContributions";
 import { Footer } from "@/components/section/Footer";
 import { Contact } from "@/components/section/Contact";
 import { NotebookBackground } from "@/components/layout/NotebookBackground"
-import { DoodleGridBackground } from "@/components/layout/DoodleGridBackground";
 
 export default function Home() {
   return (

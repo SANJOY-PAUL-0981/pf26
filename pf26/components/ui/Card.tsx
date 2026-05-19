@@ -112,11 +112,7 @@ export function Card({
     padding = 24,
     className,
     contentClassName,
-    borderStyle = "rough",
-    depth = false,
-    depthColor = "#111",
-    depthOffsetX = 8,
-    depthOffsetY = 8,
+    borderStyle = "rough"
 }: CardProps) {
     const svgRef = useRef<SVGSVGElement | null>(null)
     const wrapperRef = useRef<HTMLDivElement | null>(null)
