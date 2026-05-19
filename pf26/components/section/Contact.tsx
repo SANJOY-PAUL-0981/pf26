@@ -113,7 +113,7 @@ export function Contact() {
             className="mx-auto max-w-6xl overflow-visible px-6 py-16"
         >
             {toast && (
-                <div className="fixed bottom-8 right-8 z-[999] w-[390px] max-w-[calc(100vw-2rem)]">
+                <div className="fixed bottom-8 right-8 z-[999] w-[390px] max-w-[calc(100vw-2rem)] max-md:left-70 max-md:bottom-5 max-md:w-[300px] max-md:-translate-x-1/2 max-sm:w-[280px]">
                     <ComicToast
                         variant="thought"
                         pointer="bottom-right"
@@ -123,21 +123,21 @@ export function Contact() {
                         padding={40}
                         rotate={-1}
                         dottedShadow={false}
-                        contentClassName="flex min-h-[120px] flex-col items-center justify-center text-center"
+                        contentClassName="flex min-h-[120px] flex-col items-center justify-center text-center max-md:min-h-[88px] max-md:p-5 max-sm:min-h-[78px] max-sm:p-4"
                     >
-                        <div className="pr-2">
-                            <p className="text-base font-black leading-snug text-black">
+                        <div className="pr-2 max-md:pr-0">
+                            <p className="text-base font-black leading-snug text-black max-md:text-sm max-sm:text-[13px]">
                                 {toast.title}
                             </p>
 
-                            <p className="mt-1 text-sm font-semibold leading-relaxed text-black/70">
+                            <p className="mt-1 text-sm font-semibold leading-relaxed text-black/70 max-md:text-xs max-sm:text-[11px]">
                                 {toast.message}
                             </p>
 
                             <button
                                 type="button"
                                 onClick={() => setToast(null)}
-                                className="mt-3 text-xs font-black text-black/60 underline decoration-wavy underline-offset-4 transition hover:text-black"
+                                className="mt-3 text-xs font-black text-black/60 underline decoration-wavy underline-offset-4 transition hover:text-black max-md:mt-2 max-sm:text-[10px]"
                             >
                                 close
                             </button>
@@ -146,7 +146,7 @@ export function Contact() {
                 </div>
             )}
 
-            <div className="relative inline-block">
+            <div className="relative inline-block font-family-gaegu">
                 <SectionTitle
                     variant="pink"
                     width={220}
@@ -155,7 +155,7 @@ export function Contact() {
                     roughOptions={{
                         hachureGap: 0.75,
                     }}
-                    titleClassName="text-3xl"
+                    titleClassName="text-4xl max-md:text-3xl"
                 >
                     Contact
                 </SectionTitle>
@@ -167,7 +167,7 @@ export function Contact() {
                     alt="Paper plane doodle"
                     width={200}
                     height={200}
-                    className="pointer-events-none absolute -left-10 -top-12 z-30 rotate-[-12deg] object-contain"
+                    className="max-md:hidden pointer-events-none absolute -left-10 -top-12 z-30 rotate-[-12deg] object-contain"
                 />
 
                 <Image
@@ -175,7 +175,7 @@ export function Contact() {
                     alt="Smiley face doodle"
                     width={250}
                     height={250}
-                    className="pointer-events-none absolute -bottom-10 -right-10 z-30 rotate-[10deg] object-contain"
+                    className="max-md:hidden pointer-events-none absolute -bottom-10 -right-10 z-30 rotate-[10deg] object-contain"
                 />
 
                 <div className="relative w-full max-w-3xl overflow-visible">
@@ -197,7 +197,7 @@ export function Contact() {
                         borderColor="#111"
                         width="100%"
                         minHeight={430}
-                        padding={30}
+                        padding={25}
                         roughOptions={{
                             roughness: 1,
                             bowing: 0.7,
@@ -209,21 +209,21 @@ export function Contact() {
                         className="relative z-10 w-full"
                     >
                         <div className="mx-auto max-w-2xl">
-                            <div className="mb-7">
+                            <div className="mb-7 max-md:mb-2 font-family-hand">
                                 <h3 className="text-3xl font-black text-black">
                                     Let&apos;s build something cool.
                                 </h3>
 
-                                <p className="mt-2 text-sm font-semibold leading-relaxed text-black/60 md:text-base">
+                                <p className="mt-2 max-sm:mt-0 text-lg max-md:text-sm font-semibold leading-relaxed text-black/60 md:text-base">
                                     Have an idea, project, or opportunity? Drop a message and
                                     I&apos;ll get back to you.
                                 </p>
                             </div>
 
-                            <form className="space-y-5" onSubmit={handleSubmit}>
-                                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                            <form className="space-y-5 max-md:space-y-2" onSubmit={handleSubmit}>
+                                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 max-md:gap-2">
                                     <div>
-                                        <label className="mb-2 block text-sm font-black text-black">
+                                        <label className="mb-2 block text-lg font-black text-black font-family-hand">
                                             Name
                                         </label>
 
@@ -234,12 +234,12 @@ export function Contact() {
                                             onChange={(event) => setName(event.target.value)}
                                             required
                                             placeholder="Your name"
-                                            className="w-full rounded-xl border-2 border-black bg-white/70 px-4 py-3 text-sm font-semibold text-black outline-none transition-transform duration-150 placeholder:text-black/35 focus:-rotate-1 focus:bg-white"
+                                            className="w-full rounded-xl font-family-gaegu text-lg border-2 border-black bg-white/70 px-4 py-3 max-md:text-[16px] font-semibold text-black outline-none transition-transform duration-150 placeholder:text-black/35 focus:-rotate-1 focus:bg-white"
                                         />
                                     </div>
 
                                     <div>
-                                        <label className="mb-2 block text-sm font-black text-black">
+                                        <label className="mb-2 block text-lg font-black text-black font-family-hand">
                                             Email
                                         </label>
 
@@ -250,13 +250,13 @@ export function Contact() {
                                             onChange={(event) => setEmail(event.target.value)}
                                             required
                                             placeholder="your@email.com"
-                                            className="w-full rounded-xl border-2 border-black bg-white/70 px-4 py-3 text-sm font-semibold text-black outline-none transition-transform duration-150 placeholder:text-black/35 focus:rotate-1 focus:bg-white"
+                                            className="w-full rounded-xl font-family-gaegu text-lg border-2 border-black bg-white/70 px-4 py-3 max-md:text-[16px] font-semibold text-black outline-none transition-transform duration-150 placeholder:text-black/35 focus:rotate-1 focus:bg-white"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="mb-2 block text-sm font-black text-black">
+                                    <label className="mb-2 block text-lg font-black text-black font-family-hand">
                                         Message
                                     </label>
 
@@ -267,7 +267,7 @@ export function Contact() {
                                         onChange={(event) => setMessage(event.target.value)}
                                         required
                                         placeholder="Write your message..."
-                                        className="w-full resize-none rounded-xl border-2 border-black bg-white/70 px-4 py-3 text-sm font-semibold leading-relaxed text-black outline-none transition-transform duration-150 placeholder:text-black/35 focus:-rotate-1 focus:bg-white"
+                                        className="w-full resize-none rounded-xl font-family-gaegu text-lg border-2 border-black bg-white/70 px-4 py-3 max-md:text-[16px] font-semibold leading-relaxed text-black outline-none transition-transform duration-150 placeholder:text-black/35 focus:-rotate-1 focus:bg-white"
                                     />
                                 </div>
 
@@ -278,7 +278,7 @@ export function Contact() {
                                         variant="green"
                                         width={170}
                                         height={48}
-                                        fontSize={22}
+                                        fontSize={25}
                                         paddingX={14}
                                         enable3D
                                         depth={12}
@@ -291,7 +291,7 @@ export function Contact() {
                                             fillStyle: "hachure",
                                         }}
                                     >
-                                        <div className="inline-flex items-center gap-2">
+                                        <div className="inline-flex  font-family-hand items-center gap-2">
                                             {loading ? "Sending..." : "Send"}
                                             <Send size={16} />
                                         </div>

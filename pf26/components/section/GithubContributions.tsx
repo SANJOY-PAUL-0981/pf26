@@ -19,11 +19,11 @@ type GithubContributionResponse = {
 }
 
 const levelColors: Record<number, string> = {
-    0: "#ebedf0",
-    1: "#9be9a8",
-    2: "#40c463",
-    3: "#30a14e",
-    4: "#216e39",
+    0: "#f5f1e8",
+    1: "#d8d2c5",
+    2: "#9b9488",
+    3: "#5f5a52",
+    4: "#111111",
 }
 
 const CELL_SIZE = 12
@@ -38,10 +38,6 @@ function chunkIntoWeeks(days: MappedContributionDay[]): MappedContributionDay[][
     return weeks
 }
 
-/**
- * Returns one label per month transition, with the x-offset (in px) based on
- * which week column the first day of that month falls into.
- */
 function getMonthLabels(weeks: MappedContributionDay[][]) {
     const labels: { month: string; weekIndex: number }[] = []
     let prevMonth = ""
@@ -177,40 +173,42 @@ export function GithubContributions() {
     }, [weeks])
 
     return (
-        <section id="github" className="mx-auto max-w-6xl px-6 py-14">
-            {/* Section heading */}
-            <div className="relative inline-block">
+        <section
+            id="github"
+            className="mx-auto max-w-6xl px-6 py-14 max-md:px-3 max-md:py-10"
+        >
+            <div className="relative inline-block max-md:left-1 font-family-gaegu">
                 <SectionTitle
-                    variant="green"
+                    variant="paper"
                     width={200}
                     height={58}
                     rotate={2}
                     roughOptions={{
-                        hachureGap: 0.75
+                        hachureGap: 0.75,
                     }}
-                    titleClassName="gap-3 text-3xl"
+                    titleClassName="gap-3 text-4xl max-md:text-3xl"
                 >
                     GitHub
                 </SectionTitle>
             </div>
 
-            <div className="mt-8 flex justify-center relative">
+            <div className="relative mt-8 flex justify-center max-md:mt-6">
                 <Tape
-                    variant="green"
+                    variant="yellow"
                     tapeStyle="side-torn"
                     width={110}
                     height={46}
                     rotate={-42}
-                    className="absolute left-15 -top-2 z-20"
+                    className="max-md:hidden absolute left-[2%] -top-2 z-20"
                 />
 
                 <Tape
-                    variant="green"
+                    variant="yellow"
                     tapeStyle="side-torn"
                     width={110}
                     height={46}
                     rotate={42}
-                    className="absolute left-234 -top-2 z-20"
+                    className="max-md:hidden absolute right-[2%] -top-2 z-20"
                 />
 
                 <SketchBorder
@@ -220,7 +218,8 @@ export function GithubContributions() {
                     transparent={false}
                     fillColor="#fffbf2"
                     borderColor="#111"
-                    width="82%" className="w-full"
+                    width="100%"
+                    className="w-full max-w-[980px]"
                     padding={26}
                     roughOptions={{
                         roughness: 0.9,
@@ -230,39 +229,37 @@ export function GithubContributions() {
                         hachureGap: 5,
                         hachureAngle: -10,
                     }}
+                    contentClassName="max-md:p-4"
                 >
-                    {/* Loading state */}
                     {loading && <LoadingSkeleton />}
 
-                    {/* Error state */}
                     {!loading && error && (
-                        <div className="flex flex-col items-start gap-2">
-                            <p className="text-base font-black text-red-500">
+                        <div className="flex flex-col items-start gap-2 font-family-lacquer">
+                            <p className="text-base font-black text-red-500 max-md:text-sm">
                                 ⚠ Failed to load activity
                             </p>
-                            <p className="text-sm font-semibold text-black/50">{error}</p>
+                            <p className="text-sm font-semibold text-black/50 max-md:text-xs">
+                                {error}
+                            </p>
                         </div>
                     )}
 
-                    {/* Loaded state */}
                     {!loading && !error && data && (
-                        <div>
-                            {/* Header row */}
-                            <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                        <div className="min-w-0">
+                            <div className="mb-5 flex flex-col gap-3 max-md:gap-5 sm:flex-row sm:items-end sm:justify-between max-md:flex-row">
                                 <div>
-                                    <h3 className="text-2xl font-black leading-none text-black">
+                                    <h3 className="text-2xl font-black leading-none text-black max-md:text-xl font-family-hand">
                                         {data.totalContributions.toLocaleString()}
-                                        <span className="ml-2 font-extrabold text-black/40">
+                                        <span className="ml-2 font-extrabold text-black/40 max-sm:ml-2 max-sm:mt-1">
                                             contributions
                                         </span>
                                     </h3>
-                                    <p className="mt-1 text-sm font-semibold text-black/50">
+                                    <p className="mt-1 font-family-gaegu text-lg font-semibold text-black/50 max-md:text-[17px]">
                                         in the last year · @{data.username}
                                     </p>
                                 </div>
 
-                                {/* Legend */}
-                                <div className="flex items-center gap-2 text-xs font-bold text-black/50">
+                                <div className="flex items-center font-family-hand gap-2 text-xs font-bold text-black/50 max-sm:justify-start max-sm:items-end">
                                     <span>Less</span>
                                     <div className="flex items-center gap-[3px]">
                                         {[0, 1, 2, 3, 4].map((level) => (
@@ -277,21 +274,23 @@ export function GithubContributions() {
                                 </div>
                             </div>
 
-                            {/* Contribution grid */}
-                            <div className="overflow-x-auto pb-2">
+                            <p className="mb-2 font-family-hand hidden text-sm font-bold text-black/40 max-md:block">
+                                Swipe sideways to view full chart →
+                            </p>
+
+                            <div className="w-full overflow-x-auto overflow-y-visible pb-3 pl-7 max-md:pl-0">
                                 <div
-                                    className="relative"
+                                    className="relative font-family-hand"
                                     style={{ minWidth: `${weeks.length * CELL_STEP}px` }}
                                 >
-                                    {/* Month labels — positioned by weekIndex */}
                                     <div
-                                        className="relative mb-[6px] h-[14px]"
+                                        className="relative mb-[6px] h-[14px] max-md:hidden"
                                         style={{ width: `${weeks.length * CELL_STEP}px` }}
                                     >
                                         {monthLabels.map(({ month, weekIndex }) => (
                                             <span
                                                 key={`${month}-${weekIndex}`}
-                                                className="absolute text-[10px] font-bold uppercase tracking-wide text-black/40"
+                                                className="absolute text-[12px] font-bold uppercase tracking-wide text-black/40"
                                                 style={{ left: `${weekIndex * CELL_STEP}px` }}
                                             >
                                                 {month}
@@ -299,11 +298,9 @@ export function GithubContributions() {
                                         ))}
                                     </div>
 
-                                    {/* Grid of weeks × days */}
                                     <div className="flex gap-[4px]">
                                         {weeks.map((week, weekIndex) => (
                                             <div key={weekIndex} className="flex flex-col gap-[4px]">
-                                                {/* Pad incomplete first week with empty slots at top */}
                                                 {weekIndex === 0 &&
                                                     week.length < 7 &&
                                                     Array.from({ length: 7 - week.length }).map((_, pi) => (
@@ -323,7 +320,8 @@ export function GithubContributions() {
                                                         onMouseLeave={() => setTooltipVisible(false)}
                                                         className="relative h-[12px] w-[12px] cursor-default rounded-[3px] border border-black/10 transition-transform duration-100 hover:scale-[1.35] hover:border-black/30"
                                                         style={{
-                                                            backgroundColor: levelColors[day.level] ?? levelColors[0],
+                                                            backgroundColor:
+                                                                levelColors[day.level] ?? levelColors[0],
                                                         }}
                                                     >
                                                         {hoveredDay?.date === day.date && (
@@ -338,16 +336,15 @@ export function GithubContributions() {
                                         ))}
                                     </div>
 
-                                    {/* Day-of-week labels (Mon / Wed / Fri) */}
                                     <div
-                                        className="pointer-events-none absolute -left-7 top-[14px] flex flex-col"
+                                        className="max-md:hidden pointer-events-none font-family-hand absolute -left-7 top-[14px] flex flex-col"
                                         style={{ gap: `${CELL_GAP}px` }}
                                         aria-hidden="true"
                                     >
                                         {["", "Mon", "", "Wed", "", "Fri", ""].map((label, i) => (
                                             <div
                                                 key={i}
-                                                className="flex items-center text-[10px] font-bold text-black/30"
+                                                className="flex items-center text-[13px] font-bold text-black/30"
                                                 style={{ height: `${CELL_SIZE}px` }}
                                             >
                                                 {label}
@@ -357,8 +354,7 @@ export function GithubContributions() {
                                 </div>
                             </div>
 
-                            {/* Footer stats */}
-                            <div className="mt-5 flex flex-wrap gap-x-6 gap-y-1 border-t border-dashed border-black/15 pt-4">
+                            <div className="max-md:hidden font-family-gaegu mt-5 max-md:mt-1 flex flex-wrap gap-x-6 gap-y-2 border-t border-dashed border-black/15 pt-4 max-md:pt-1 max-md:gap-x-4">
                                 <Stat
                                     label="longest streak"
                                     value={computeLongestStreak(data.data)}
@@ -394,8 +390,8 @@ function Stat({
 }) {
     return (
         <div className="flex items-baseline gap-1">
-            <span className="text-lg font-black text-black">{value}</span>
-            <span className="text-xs font-semibold text-black/40">
+            <span className="text-xl font-black text-black">{value}</span>
+            <span className="text-sm font-semibold text-black/40">
                 {unit} · {label}
             </span>
         </div>

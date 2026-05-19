@@ -84,7 +84,7 @@ const tagVariantMap: Record<string, any> = {
 export function Projects() {
     return (
         <section id="projects" className="mx-auto max-w-6xl px-6 py-14">
-            <div className="relative inline-block">
+            <div className="relative inline-block font-family-gaegu">
                 <Tape
                     variant="yellow"
                     tapeStyle="side-torn"
@@ -103,7 +103,7 @@ export function Projects() {
                         hachureGap: 0.75
                     }}
                     icon={<FolderGit2 size={28} />}
-                    titleClassName="gap-3 text-3xl"
+                    titleClassName="gap-3 text-4xl max-md:text-3xl"
                 >
                     Projects
                 </SectionTitle>
@@ -115,7 +115,7 @@ export function Projects() {
                     alt=""
                     width={250}
                     height={250}
-                    className="pointer-events-none absolute -right-46 top-1/2 z-20 -translate-y-1/2 rotate-6 object-contain" />
+                    className="max-lg:hidden pointer-events-none absolute -right-46 top-1/2 z-20 -translate-y-1/2 rotate-6 object-contain" />
 
                 <div className="mt-8 grid grid-cols-1 gap-7 md:grid-cols-2 xl:grid-cols-3">
                     {projects.map((project, index) => (
@@ -149,7 +149,7 @@ export function Projects() {
                                 <div className="flex h-full min-h-[260px] flex-col">
                                     {/* top title */}
                                     <div className="mb-4 flex items-start justify-between gap-3">
-                                        <h3 className="text-2xl font-black leading-none text-black">
+                                        <h3 className="text-2xl font-family-hand font-black leading-none text-black">
                                             {project.name}
                                         </h3>
 
@@ -159,12 +159,12 @@ export function Projects() {
                                     </div>
 
                                     {/* description */}
-                                    <p className="text-sm font-semibold leading-relaxed text-black/80 md:text-base">
+                                    <p className="text-sm font-family-hand font-semibold leading-relaxed text-black/80 md:text-base">
                                         {project.description}
                                     </p>
 
                                     {/* tech badges */}
-                                    <div className="mt-5 flex flex-wrap gap-2">
+                                    <div className="mt-5 font-family-gaegu flex flex-wrap gap-2">
                                         {project.tech.map((tag) => (
                                             <Badge
                                                 key={tag}
@@ -172,7 +172,7 @@ export function Projects() {
                                                 shape="rounded-rectangle"
                                                 width={tag.length > 8 ? 100 : 82}
                                                 height={25}
-                                                fontSize={12}
+                                                fontSize={15}
                                                 paddingX={8}
                                                 radius={40}
                                                 roughOptions={{
@@ -188,7 +188,7 @@ export function Projects() {
                                     </div>
 
                                     {/* bottom hint */}
-                                    <div className="mt-auto pt-6 text-sm font-black text-black/70">
+                                    <div className="mt-auto font-family-gaegu pt-6 text-lg font-black text-black/70">
                                         Click to view →
                                     </div>
                                 </div>

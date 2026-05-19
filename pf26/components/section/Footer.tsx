@@ -62,7 +62,7 @@ export function Footer({ className }: FooterProps) {
         <footer
             ref={wrapperRef}
             className={cn(
-                "relative mt-20 min-h-[170px] overflow-visible mb-18",
+                "relative mt-20 min-h-[170px] overflow-visible mb-19 max-md:mb-0",
                 className
             )}
         >
@@ -72,7 +72,7 @@ export function Footer({ className }: FooterProps) {
                 aria-hidden="true"
             />
 
-            <div className="relative z-10 mx-auto flex min-h-[170px] max-w-6xl flex-col items-center justify-center gap-4 px-6 pt-10 text-center">
+            <div className="relative z-10 mx-auto flex min-h-[170px] max-w-6xl flex-col items-center justify-center gap-4 px-6 pt-10 text-center font-family-gaegu">
                 <p className="text-sm font-bold text-black/60">
                     © {new Date().getFullYear()} Sanjoy Paul. All rights reserved.
                 </p>

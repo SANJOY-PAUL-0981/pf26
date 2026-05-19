@@ -1,7 +1,12 @@
 @import "tailwindcss";
 
-body {
-  font-family: "Comic Sans MS", "Comic Neue", cursive;
+@theme {
+  --font-family-sans: "Nunito", sans-serif;
+  --font-family-mono: "Geist Mono", monospace;
+  --font-family-hand: "Patrick Hand", cursive;
+  --font-family-gaegu: "Gaegu", cursive;
+  --font-family-lacquer: "Lacquer", cursive;
+  --font-family-indie: "Indie Flower", cursive;
 }
 
 html {

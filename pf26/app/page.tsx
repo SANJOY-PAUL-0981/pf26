@@ -11,7 +11,7 @@ import { DoodleGridBackground } from "@/components/layout/DoodleGridBackground";
 
 export default function Home() {
   return (
-    <main className="px-0">
+    <main className="overflow-x-clip">
       <NotebookBackground>
         <Navbar />
         <Hero />

@@ -4,14 +4,7 @@ import { useEffect, useRef } from "react"
 import rough from "roughjs"
 import { cn } from "@/lib/utils"
 
-type TapeVariant =
-    | "yellow"
-    | "pink"
-    | "green"
-    | "blue"
-    | "purple"
-    | "orange"
-    | "gray"
+type TapeVariant = "yellow" | "pink" | "green" | "blue" | "purple" | "orange" | "gray"
 
 type TapeStyle = "smooth" | "torn" | "side-torn"
 
@@ -20,14 +13,7 @@ type RoughTapeOptions = {
     stroke?: string
     strokeWidth?: number
     fill?: string
-    fillStyle?:
-    | "solid"
-    | "hachure"
-    | "zigzag"
-    | "cross-hatch"
-    | "dots"
-    | "dashed"
-    | "zigzag-line"
+    fillStyle?: "solid" | "hachure" | "zigzag" | "cross-hatch" | "dots" | "dashed" | "zigzag-line"
     hachureGap?: number
     hachureAngle?: number
     roughness?: number

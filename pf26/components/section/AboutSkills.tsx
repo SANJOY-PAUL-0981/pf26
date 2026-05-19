@@ -23,7 +23,6 @@ import node from "@/public/icons/node.png"
 import star from "@/public/doodles/star.png"
 import bulb from "@/public/doodles/bulb.png"
 
-
 const skills = [
     { name: "JavaScript", icon: js, variant: "yellow", borderColour: "#FFEA00" },
     { name: "TypeScript", icon: ts, variant: "blue", borderColour: "#0095FF" },
@@ -55,25 +54,24 @@ const widthMap: Record<string, number> = {
     Git: 105,
     Docker: 130,
     HonoJs: 125,
-    Linux: 120
+    Linux: 120,
 }
 
 export function AboutSkills() {
     return (
         <section
             id="about"
-            className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-6 py-10 lg:grid-cols-2"
+            className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 py-10 lg:grid-cols-2 max-md:gap-8 max-md:px-5 max-md:py-6"
         >
-            {/* ABOUT */}
             <div className="relative">
-                <div className="relative inline-block top-10 left-5 z-30">
+                <div className="relative font-family-gaegu left-5 top-10 z-30 inline-block max-md:left-2 max-md:top-7">
                     <Tape
                         variant="yellow"
                         tapeStyle="side-torn"
                         width={65}
                         height={30}
                         rotate={-45}
-                        className="absolute top-2 -left-5 -bottom-5 z-20"
+                        className="absolute -bottom-5 -left-5 top-2 z-20 max-md:scale-90"
                     />
                     <SectionTitle
                         variant="green"
@@ -91,21 +89,21 @@ export function AboutSkills() {
                             />
                         }
                         roughOptions={{
-                            hachureGap: 0.5
+                            hachureGap: 0.5,
                         }}
-                        titleClassName="text-3xl"
+                        titleClassName="text-4xl max-md:text-3xl"
                     >
                         About
                     </SectionTitle>
                 </div>
 
-                <div className="relative w-fit overflow-visible mt-5">
+                <div className="relative mt-5 w-full max-w-[525px] overflow-visible max-lg:mx-auto">
                     <Image
                         src={coffee}
                         alt="Coffee cup"
                         width={350}
                         height={350}
-                        className="absolute -left-50 top-45 z-20 -translate-y-1/2 rotate-[-8deg] object-contain"
+                        className="max-lg:hidden absolute -left-50 top-45 z-20 -translate-y-1/2 rotate-[-8deg] object-contain max-xl:-left-32 max-lg:-left-24 max-md:-left-8 max-md:top-10 max-md:w-24 max-sm:-left-4 max-sm:w-20"
                     />
 
                     <SketchBorder
@@ -116,22 +114,22 @@ export function AboutSkills() {
                         borderStyle="dashed"
                         minHeight={280}
                         padding={26}
-                        width={525}
+                        width="100%"
                         roughOptions={{
+                            seed: 10,
                             roughness: 0.75,
                             bowing: 0.7,
                             strokeWidth: 2,
                         }}
-                        contentClassName="pl-10"
+                        contentClassName="pl-10 max-md:pl-5 max-md:pr-5 max-md:py-5"
                     >
-                        <div>
-                            <p className="text-base font-semibold leading-relaxed text-black md:text-lg">
+                        <div className="font-family-hand">
+                            <p className="text-base font-semibold leading-relaxed text-black md:text-xl max-md:text-[17px">
                                 I&apos;m Sanjoy Paul a Computer Science undergrad who loves turning ideas into
                                 reality through code.
                             </p>
 
-                            <ul className="mt-5 list-disc space-y-1.5 pl-8 text-sm font-medium leading-relaxed md:text-base">
-
+                            <ul className="mt-5 list-disc space-y-1.5 pl-8 font-medium leading-relaxed md:text-[17.75px] max-md:pl-5 max-md:text-[16px]">
                                 <li>
                                     <span>
                                         Currently i&apos;m in my pre-final year of my college, with proficiency in Full-Stack Development with
@@ -168,16 +166,15 @@ export function AboutSkills() {
                 </div>
             </div>
 
-            {/* SKILLS */}
             <div id="skills" className="relative">
-                <div className="relative inline-block top-10 left-5 z-30">
+                <div className="relative left-5 font-family-gaegu top-10 z-30 inline-block max-md:left-2 max-md:top-7">
                     <Tape
                         variant="yellow"
                         tapeStyle="side-torn"
                         width={55}
                         height={32}
                         rotate={-45}
-                        className="absolute -top-4 left-38 -bottom-5 z-20"
+                        className="absolute -bottom-5 -top-4 left-38 z-20 max-md:left-32 max-md:scale-90"
                     />
                     <SectionTitle
                         variant="purple"
@@ -195,15 +192,15 @@ export function AboutSkills() {
                             />
                         }
                         roughOptions={{
-                            hachureGap: 0.5
+                            hachureGap: 0.5,
                         }}
-                        titleClassName="text-3xl"
+                        titleClassName="text-4xl max-md:text-3xl"
                     >
                         Skills
                     </SectionTitle>
                 </div>
 
-                <div className="mt-5">
+                <div className="mt-5 w-full max-w-[525px] max-lg:mx-auto font-family-hand">
                     <SketchBorder
                         shape="rounded-rectangle"
                         radius={20}
@@ -212,17 +209,19 @@ export function AboutSkills() {
                         borderStyle="dashed"
                         minHeight={280}
                         padding={26}
-                        width={525}
+                        width="100%"
                         roughOptions={{
                             roughness: 0.75,
                             bowing: 0.7,
                             strokeWidth: 2,
                         }}
+                        contentClassName="max-md:p-5"
                     >
-                        <p className="mb-5 text-base font-semibold text-black md:text-lg">
+                        <p className="mb-5 text-base font-semibold text-black md:text-xl max-md:text-[17px]">
                             Here are some technologies I work with:
                         </p>
-                        <div className="flex flex-wrap gap-3">
+
+                        <div className="flex flex-wrap gap-3 max-md:gap-2 max-md:justify-between">
                             {skills.map((skill) => (
                                 <Badge
                                     key={skill.name}
@@ -250,7 +249,7 @@ export function AboutSkills() {
                                             className="object-contain scale-150"
                                         />
 
-                                        <span className="font-bold leading-none">
+                                        <span className="font-bold leading-none md:text-[17.75px] max-md:text-[16px]">
                                             {skill.name}
                                         </span>
                                     </div>
