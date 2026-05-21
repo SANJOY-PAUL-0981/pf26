@@ -127,7 +127,7 @@ export default function NotFound() {
                     width={120}
                     height={46}
                     rotate={8}
-                    className="absolute -right-4 top-10 z-20 max-md:hidden"
+                    className="absolute -right-12 top-10 z-20 max-md:hidden"
                 />
 
                 <SketchBorder
@@ -201,7 +201,7 @@ export default function NotFound() {
                     </div>
                 </SketchBorder>
 
-                <div className="pointer-events-none absolute -bottom-8 left-10 rotate-[-3deg] rounded-full border-2 border-black bg-green-200 px-5 py-2 text-sm font-black shadow-[4px_4px_0_#111] max-sm:left-1/2 max-sm:-translate-x-1/2">
+                <div className="pointer-events-none font-family-lacquer absolute -bottom-8 left-10 rotate-[-3deg] rounded-full border-2 border-black bg-green-200 px-5 py-2 text-sm font-black shadow-[4px_4px_0_#111] max-sm:left-1/2 max-sm:-translate-x-1/2">
                     maybe the URL typo monster ate it :P
                 </div>
             </section>
