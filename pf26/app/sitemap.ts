@@ -7,13 +7,19 @@ export default function sitemap() {
             priority: 1,
         },
         {
-            url: 'https://sanjoydev.com/projects',
+            url: 'https://sanjoydev.com/#projects',
             lastModified: new Date(),
             changeFrequency: 'monthly',
             priority: 0.8,
         },
         {
-            url: 'https://sanjoydev.com/contact',
+            url: 'https://sanjoydev.com/#about',
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://sanjoydev.com/#contact',
             lastModified: new Date(),
             changeFrequency: 'yearly',
             priority: 0.5,
