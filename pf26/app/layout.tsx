@@ -58,6 +58,10 @@ export const metadata: Metadata = {
   description:
     "Hello! I am Sanjoy Paul, a Computer Science undergraduate and full-stack developer and AI enthusiast building scalable, good-looking products.",
 
+  verification: {
+    google: "kUKSMU6xUgjz5M3Nko0oE7vM13axrASTSIG__iETTko",
+  },
+
   keywords: [
     "Sanjoy Paul",
     "Sanjoy.dev",
