@@ -149,7 +149,7 @@ export function Hero() {
 
                 <div className="mt-8 flex flex-wrap gap-5">
                     <Button
-                        href="/resume.pdf"
+                        href="https://drive.google.com/file/d/1h9bpb-RyMJwvI96Pqz75Tz5lRBEGX_wU/view"
                         external
                         variant="purple"
                         width={190}
