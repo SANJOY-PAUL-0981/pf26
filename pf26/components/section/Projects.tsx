@@ -9,6 +9,14 @@ import cloud from "@/public/doodles/cloud.png"
 
 const projects = [
     {
+        name: "SketchUI",
+        description:
+            "Hand-drawned Sketch themed component library for react build in roughjs.",
+        tech: ["Next.js", "Rough.js", "Bun", "Tailwind"],
+        link: "https://sketchui.sanjoydev.com",
+        variant: "yellow",
+    },
+    {
         name: "OuraCode",
         description:
             "A collaborative online code editor where users can write, run, and share code in real time.",
@@ -39,14 +47,6 @@ const projects = [
         tech: ["C"],
         link: "https://github.com/SANJOY-PAUL-0981/Tsukifetch",
         variant: "pink",
-    },
-    {
-        name: "Clipr",
-        description:
-            "Clipr is a URL shortener tool available as both a browser extension and a website.",
-        tech: ["React", "Express.js", "MongoDB", "Tailwind"],
-        link: "https://github.com/SANJOY-PAUL-0981/Clipr",
-        variant: "yellow",
     },
     {
         name: "Student Management App",
